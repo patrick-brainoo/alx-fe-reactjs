@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
+import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
 import SearchBar from './components/SearchBar';
-import FavoritesList from './components/FavoriteList';
+import FavoritesList from './components/FavoritesList';
 import RecommendationsList from './components/RecommendationsList';
 
 function App() {
@@ -11,12 +11,11 @@ function App() {
     <BrowserRouter>
       <div style={{ padding: '20px' }}>
         <h1>Recipe Sharing App</h1>
-        <AddRecipeForm />
+
         <SearchBar />
-        <RecipeList />
+        <AddRecipeForm />
         <FavoritesList />
         <RecommendationsList />
-        
 
         <Routes>
           <Route path="/" element={<RecipeList />} />
