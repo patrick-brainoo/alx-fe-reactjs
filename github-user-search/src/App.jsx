@@ -1,10 +1,10 @@
-import SearchBar from "./components/SearchBar";
+import Search from "./components/Search";
 
 function App() {
   return (
     <div>
       <h1>GitHub User Search</h1>
-      <SearchBar />
+      <Search />
     </div>
   );
 }
