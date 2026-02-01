@@ -1,6 +1,10 @@
 import axios from "axios";
 
-export const searchUsers = ({
+/*
+  Advanced search using GitHub Search API
+  (kept for this task)
+*/
+export const fetchUserData = ({
   username,
   location,
   minRepos,
