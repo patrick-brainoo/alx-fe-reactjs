@@ -1,9 +1,5 @@
 import axios from "axios";
 
-/*
-  Advanced search using GitHub Search API
-  (kept for this task)
-*/
 export const fetchUserData = ({
   username,
   location,
@@ -12,12 +8,10 @@ export const fetchUserData = ({
   perPage = 10,
 }) => {
   let query = "";
-
   if (username) query += `${username}`;
   if (location) query += `+location:${location}`;
   if (minRepos) query += `+repos:>=${minRepos}`;
 
   const url = `https://api.github.com/search/users?q=${query}&page=${page}&per_page=${perPage}`;
-
   return axios.get(url);
 };

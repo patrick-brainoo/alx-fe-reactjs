@@ -6,10 +6,8 @@ function Search() {
   const [location, setLocation] = useState("");
   const [minRepos, setMinRepos] = useState("");
   const [users, setUsers] = useState([]);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
   const [page, setPage] = useState(1);
   const perPage = 10;
 
@@ -34,15 +32,9 @@ function Search() {
         page: pageNumber,
         perPage,
       });
-
       const items = response.data.items || [];
-
-      if (reset) {
-        setUsers(items);
-      } else {
-        setUsers((prev) => [...prev, ...items]);
-      }
-
+      if (reset) setUsers(items);
+      else setUsers((prev) => [...prev, ...items]);
       setPage(pageNumber);
     } catch (err) {
       setError(true);
@@ -51,9 +43,7 @@ function Search() {
     }
   };
 
-  const handleLoadMore = () => {
-    loadUsers(page + 1);
-  };
+  const handleLoadMore = () => loadUsers(page + 1);
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -68,7 +58,6 @@ function Search() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-
         <input
           type="text"
           placeholder="Location"
@@ -76,7 +65,6 @@ function Search() {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
         />
-
         <input
           type="number"
           placeholder="Min repos"
@@ -84,7 +72,6 @@ function Search() {
           value={minRepos}
           onChange={(e) => setMinRepos(e.target.value)}
         />
-
         <button
           type="submit"
           className="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700"
@@ -94,34 +81,15 @@ function Search() {
       </form>
 
       {loading && <p className="text-center">Loading...</p>}
-
-      {error && (
-        <p className="text-center text-red-600">
-          Looks like we cant find the user
-        </p>
-      )}
+      {error && <p className="text-center text-red-600">Looks like we cant find the user</p>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {users.map((user) => (
-          <div
-            key={user.id}
-            className="border rounded p-4 flex items-center gap-4"
-          >
-            <img
-              src={user.avatar_url}
-              alt={user.login}
-              className="w-16 h-16 rounded-full"
-            />
-
+          <div key={user.id} className="border rounded p-4 flex items-center gap-4">
+            <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
             <div>
               <p className="font-semibold">{user.login}</p>
-
-              <a
-                href={user.html_url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 underline text-sm"
-              >
+              <a href={user.html_url} target="_blank" rel="noreferrer" className="text-blue-600 underline text-sm">
                 View profile
               </a>
             </div>
@@ -131,10 +99,7 @@ function Search() {
 
       {users.length > 0 && !loading && (
         <div className="flex justify-center mt-6">
-          <button
-            onClick={handleLoadMore}
-            className="border px-4 py-2 rounded hover:bg-gray-100"
-          >
+          <button onClick={handleLoadMore} className="border px-4 py-2 rounded hover:bg-gray-100">
             Load more
           </button>
         </div>
