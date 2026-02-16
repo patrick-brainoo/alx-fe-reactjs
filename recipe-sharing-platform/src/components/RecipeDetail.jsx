@@ -14,14 +14,15 @@ function RecipeDetail() {
 
   if (!recipe) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Recipe not found.</p>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-gray-500 text-lg">Recipe not found.</p>
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      {/* Back Link */}
       <Link
         to="/"
         className="text-blue-500 hover:underline mb-4 inline-block"
@@ -29,9 +30,12 @@ function RecipeDetail() {
         &larr; Back to Home
       </Link>
 
-      <div className="bg-white rounded-lg shadow-lg p-6">
+      {/* Recipe Card */}
+      <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+        {/* Title */}
         <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
 
+        {/* Image */}
         {recipe.image && (
           <img
             src={recipe.image}
@@ -40,6 +44,7 @@ function RecipeDetail() {
           />
         )}
 
+        {/* Summary */}
         {recipe.summary && (
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">Summary</h2>
@@ -50,7 +55,7 @@ function RecipeDetail() {
         {/* Ingredients */}
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
-          <ul className="list-disc list-inside text-gray-700">
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
             {recipe.ingredients.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
@@ -60,7 +65,7 @@ function RecipeDetail() {
         {/* Cooking Instructions */}
         <section>
           <h2 className="text-2xl font-semibold mb-2">Cooking Instructions</h2>
-          <ol className="list-decimal list-inside text-gray-700">
+          <ol className="list-decimal list-inside text-gray-700 space-y-1">
             {recipe.instructions.map((step, index) => (
               <li key={index}>{step}</li>
             ))}
