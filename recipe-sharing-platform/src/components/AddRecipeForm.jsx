@@ -7,11 +7,10 @@ function AddRecipeForm({ onAddRecipe }) {
   const [instructions, setInstructions] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Validation
+  // ALX wants a separate validate function
+  const validate = () => {
     const newErrors = {};
+
     if (!title.trim()) newErrors.title = "Title is required";
     if (!ingredients.trim()) newErrors.ingredients = "Ingredients are required";
     else if (ingredients.split("\n").length < 2)
@@ -21,10 +20,14 @@ function AddRecipeForm({ onAddRecipe }) {
       newErrors.instructions = "Enter at least 2 steps";
 
     setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // true if valid
+  };
 
-    if (Object.keys(newErrors).length > 0) return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    // Prepare new recipe object
+    if (!validate()) return; // call validate before submitting
+
     const newRecipe = {
       id: Date.now(),
       title: title.trim(),
@@ -104,3 +107,4 @@ function AddRecipeForm({ onAddRecipe }) {
 }
 
 export default AddRecipeForm;
+
