@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import recipesData from "../data.json";
 
 function HomePage() {
   const [recipes, setRecipes] = useState([]);
 
+  // Load mock data when component mounts
   useEffect(() => {
-    // Load mock data when component mounts
     setRecipes(recipesData);
   }, []);
 
@@ -36,12 +37,13 @@ function HomePage() {
                 {recipe.summary}
               </p>
 
-              <a
-                href="#"
+              {/* Link to Recipe Detail page */}
+              <Link
+                to={`/recipe/${recipe.id}`}
                 className="text-blue-500 font-medium hover:underline"
               >
                 View recipe
-              </a>
+              </Link>
             </div>
           </div>
         ))}
