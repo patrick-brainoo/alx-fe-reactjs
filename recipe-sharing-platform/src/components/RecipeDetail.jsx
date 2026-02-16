@@ -29,42 +29,44 @@ function RecipeDetail() {
         &larr; Back to Home
       </Link>
 
-      <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
 
-      {recipe.image && (
-        <img
-          src={recipe.image}
-          alt={recipe.title}
-          className="w-full h-64 object-cover rounded-lg mb-6"
-        />
-      )}
+        {recipe.image && (
+          <img
+            src={recipe.image}
+            alt={recipe.title}
+            className="w-full h-64 object-cover rounded-lg mb-6 shadow-md"
+          />
+        )}
 
-      {recipe.summary && (
+        {recipe.summary && (
+          <section className="mb-6">
+            <h2 className="text-2xl font-semibold mb-2">Summary</h2>
+            <p className="text-gray-700">{recipe.summary}</p>
+          </section>
+        )}
+
+        {/* Ingredients */}
         <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">Summary</h2>
-          <p className="text-gray-700">{recipe.summary}</p>
+          <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
+          <ul className="list-disc list-inside text-gray-700">
+            {recipe.ingredients.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
         </section>
-      )}
 
-      {/* Ingredients */}
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
-        <ul className="list-disc list-inside text-gray-700">
-          {recipe.ingredients.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Cooking Instructions */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Cooking Instructions</h2>
-        <ol className="list-decimal list-inside text-gray-700">
-          {recipe.instructions.map((step, index) => (
-            <li key={index}>{step}</li>
-          ))}
-        </ol>
-      </section>
+        {/* Cooking Instructions */}
+        <section>
+          <h2 className="text-2xl font-semibold mb-2">Cooking Instructions</h2>
+          <ol className="list-decimal list-inside text-gray-700">
+            {recipe.instructions.map((step, index) => (
+              <li key={index}>{step}</li>
+            ))}
+          </ol>
+        </section>
+      </div>
     </div>
   );
 }
