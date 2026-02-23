@@ -1,37 +1,38 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./components/Home";
+import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
-import ProfileDetails from "./components/ProfileDetails";
-import ProfileSettings from "./components/ProfileSettings";
-import ProtectedRoute from "./components/ProtectedRoute";
+import BlogPost from "./components/BlogPost";
+import Login from "./components/Login";
 
-function App() {
-  const isAuthenticated = true; // Simulate login status, toggle to test
+// Simulate authentication
+const isAuthenticated = false; // change to true to simulate logged-in user
 
+// Protected Route Component
+function ProtectedRoute({ children }) {
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+}
+
+export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Public Routes */}
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
 
-        {/* Protected Profile Route */}
+        {/* Dynamic Blog Route */}
+        <Route path="/blog/:id" element={<BlogPost />} />
+
+        {/* Protected Routes */}
         <Route
           path="/profile/*"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
           }
-        >
-          {/* Nested Routes */}
-          <Route path="details" element={<ProfileDetails />} />
-          <Route path="settings" element={<ProfileSettings />} />
-        </Route>
-
-        {/* Catch all route */}
-        <Route path="*" element={<Navigate to="/" />} />
+        />
       </Routes>
     </Router>
   );
 }
-
-export default App;
