@@ -1,18 +1,15 @@
+import { useState } from "react";
 import { useQuery } from "react-query";
 
-const fetchPosts = async () => {
-  const response = await fetch(
-    "https://jsonplaceholder.typicode.com/posts"
-  );
-
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-
-  return response.json();
-};
+function fetchPosts(page) {
+  return fetch(
+    `https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${page}`
+  ).then((res) => res.json());
+}
 
 function PostsComponent() {
+  const [page, setPage] = useState(1);
+
   const {
     data,
     isLoading,
@@ -20,7 +17,17 @@ function PostsComponent() {
     error,
     refetch,
     isFetching,
-  } = useQuery("posts", fetchPosts);
+  } = useQuery(
+    ["posts", page],
+    () => fetchPosts(page),
+    {
+      // ✅ required advanced options
+      cacheTime: 1000 * 60 * 10,        // 10 minutes
+      staleTime: 1000 * 60 * 2,         // 2 minutes
+      refetchOnWindowFocus: false,
+      keepPreviousData: true,
+    }
+  );
 
   if (isLoading) {
     return <p>Loading posts...</p>;
@@ -32,20 +39,40 @@ function PostsComponent() {
 
   return (
     <div>
+      <h2>Posts</h2>
+
       <button onClick={() => refetch()}>
-        Refetch Posts
+        Refetch posts
       </button>
 
-      {isFetching && <p>Updating...</p>}
-
       <ul>
-        {data.slice(0, 10).map((post) => (
-          <li key={post.id} style={{ marginBottom: "1rem" }}>
+        {data.map((post) => (
+          <li key={post.id}>
             <strong>{post.title}</strong>
-            <p>{post.body}</p>
           </li>
         ))}
       </ul>
+
+      <div style={{ marginTop: "1rem" }}>
+        <button
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+
+        <span style={{ margin: "0 10px" }}>
+          Page {page}
+        </span>
+
+        <button
+          onClick={() => setPage((p) => p + 1)}
+        >
+          Next
+        </button>
+
+        {isFetching && <span> Updating...</span>}
+      </div>
     </div>
   );
 }
