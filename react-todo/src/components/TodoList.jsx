@@ -1,3 +1,4 @@
+// src/components/TodoList.jsx
 import { useState } from "react";
 import AddTodoForm from "./AddTodoForm";
 
@@ -8,7 +9,11 @@ export default function TodoList() {
   ]);
 
   const addTodo = (text) => {
-    const newTodo = { id: Date.now(), text, completed: false };
+    const newTodo = {
+      id: Date.now(),
+      text,
+      completed: false,
+    };
     setTodos([...todos, newTodo]);
   };
 
@@ -25,21 +30,25 @@ export default function TodoList() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: "400px", margin: "2rem auto" }}>
       <h1>Todo List</h1>
-      <AddTodoForm onAdd={addTodo} />
+      <AddTodoForm addTodo={addTodo} />
       <ul>
         {todos.map((todo) => (
-          <li
-            key={todo.id}
-            onClick={() => toggleTodo(todo.id)}
-            style={{
-              textDecoration: todo.completed ? "line-through" : "none",
-              cursor: "pointer",
-            }}
-          >
-            {todo.text}{" "}
-            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>
+          <li key={todo.id} style={{ marginBottom: "0.5rem" }}>
+            <span
+              onClick={() => toggleTodo(todo.id)}
+              style={{
+                textDecoration: todo.completed ? "line-through" : "none",
+                cursor: "pointer",
+              }}
+            >
+              {todo.text}
+            </span>
+            <button
+              onClick={() => deleteTodo(todo.id)}
+              style={{ marginLeft: "1rem" }}
+            >
               Delete
             </button>
           </li>
